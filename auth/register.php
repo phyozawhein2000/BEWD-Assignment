@@ -60,7 +60,7 @@ include '../includes/header.php';
                 <label class="block text-sm font-medium text-slate-700">Email Address</label>
                 <input name="email" type="email" required 
                     class="w-full mt-1 px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" 
-                    placeholder="example@foodfusion.com">
+                    placeholder="user@example.com">
             </div>
             
             <div class="relative">

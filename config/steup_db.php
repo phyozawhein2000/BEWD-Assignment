@@ -36,11 +36,22 @@ try {
         submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB;";
+    //4. Contact Form Table (User Feedback အတွက်) [cite: 57]
+    $sql_contact = "CREATE TABLE IF NOT EXISTS contact_messages (
+        message_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        subject VARCHAR(150) NOT NULL,
+        message TEXT NOT NULL,
+        status ENUM('unread', 'read') DEFAULT 'unread',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB;";
 
     // Execute queries
     $pdo->exec($sql_users);
     $pdo->exec($sql_recipes);
     $pdo->exec($sql_cookbook);
+    $pdo->exec($sql_contact);
 
     echo "Database tables created successfully! [cite: 44]";
 
