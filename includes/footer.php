@@ -35,13 +35,22 @@
     </div>
 
     <div class="flex flex-col space-y-4">
-      <h3 class="text-white font-semibold uppercase tracking-wider text-xs">Stay Updated</h3>
-      <p class="text-xs">The best recipes, delivered to your inbox.</p>
-      <form class="flex">
-        <input type="email" placeholder="Email" class="bg-stone-900 border border-stone-800 rounded-l px-3 py-2 text-sm focus:outline-none focus:border-orange-500 w-full">
-        <button class="bg-orange-600 text-white px-4 py-2 rounded-r hover:bg-orange-500 transition text-sm font-medium">Join</button>
-      </form>
-    </div>
+    <h3 class="text-white font-semibold uppercase tracking-wider text-xs">Stay Updated</h3>
+    <p class="text-xs">The best recipes, delivered to your inbox.</p>
+    
+    <form id="footerNewsletterForm" class="flex relative">
+        <input type="email" id="footerSubEmail" placeholder="Email" required
+               class="bg-stone-900 border border-stone-800 rounded-l px-3 py-2 text-sm focus:outline-none focus:border-orange-500 w-full transition-all">
+        
+        <button type="submit" id="footerSubBtn" 
+                class="bg-orange-600 text-white px-4 py-2 rounded-r hover:bg-orange-500 transition text-sm font-medium shrink-0">
+            Join
+        </button>
+    </form>
+    
+    <p id="footerSubMsg" class="text-[10px] font-bold uppercase tracking-widest hidden"></p>
+</div>
+
 
   </div>
 
@@ -52,3 +61,44 @@
     </div>
   </div>
 </footer>
+<script>
+document.getElementById('footerNewsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('footerSubEmail');
+    const btn = document.getElementById('footerSubBtn');
+    const msg = document.getElementById('footerSubMsg');
+
+    btn.disabled = true;
+    btn.innerText = '...';
+
+    const formData = new FormData();
+    formData.append('email', emailInput.value);
+
+    // အရှေ့က ရေးခဲ့တဲ့ subscribe_process.php ကိုပဲ ပြန်သုံးပါမယ်
+    fetch('subscribe_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'email=' + encodeURIComponent(emailInput.value)
+    })
+    .then(response => response.json())
+    .then(data => {
+        msg.classList.remove('hidden', 'text-red-400', 'text-orange-500');
+        msg.innerText = data.message;
+
+        if(data.status === 'success') {
+            msg.classList.add('text-orange-500');
+            emailInput.value = '';
+            btn.innerText = 'Done';
+        } else {
+            msg.classList.add('text-red-400');
+            btn.innerText = 'Join';
+            btn.disabled = false;
+        }
+    })
+    .catch(error => {
+        msg.innerText = "Error connecting...";
+        msg.classList.remove('hidden');
+        btn.disabled = false;
+    });
+});
+</script>

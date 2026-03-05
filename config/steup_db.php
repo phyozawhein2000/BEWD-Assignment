@@ -47,11 +47,18 @@ try {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB;";
 
+    $sql_subscibe = "CREATE TABLE subscribers (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB;";
+
     // Execute queries
     $pdo->exec($sql_users);
     $pdo->exec($sql_recipes);
     $pdo->exec($sql_cookbook);
     $pdo->exec($sql_contact);
+    $pdo->exec($sql_subscibe);
 
     echo "Database tables created successfully! [cite: 44]";
 

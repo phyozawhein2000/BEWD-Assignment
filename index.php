@@ -97,14 +97,51 @@ try {
     <div class="max-w-2xl mx-auto px-6 text-center">
         <h2 class="text-3xl font-serif text-stone-900 mb-6">Join the Table</h2>
         <p class="text-stone-500 mb-10 font-light">Get our best recipes delivered to your inbox once a month. No noise, just food.</p>
-        <form class="relative">
-            <input type="email" placeholder="Your email address" class="w-full bg-transparent border-b border-stone-300 py-4 outline-none focus:border-emerald-600 transition-colors text-center">
-            <button class="mt-8 text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-700 hover:text-emerald-500 transition-colors">Subscribe</button>
+        
+        <form id="newsletterForm" class="relative">
+            <input type="email" id="subscriberEmail" name="email" required placeholder="Your email address" 
+                   class="w-full bg-transparent border-b border-stone-300 py-4 outline-none focus:border-emerald-600 transition-colors text-center">
+            
+            <button type="submit" id="subBtn" class="mt-8 text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-700 hover:text-emerald-500 transition-colors">
+                Subscribe
+            </button>
+            
+            <p id="subMessage" class="mt-4 text-[10px] font-bold uppercase tracking-widest hidden"></p>
         </form>
     </div>
 </section>
 
 <script>
+document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('subscriberEmail').value;
+    const btn = document.getElementById('subBtn');
+    const msg = document.getElementById('subMessage');
+
+    btn.innerText = 'Processing...';
+
+    // AJAX နဲ့ Data ပို့ခြင်း
+    fetch('subscribe_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'email=' + encodeURIComponent(email)
+    })
+    .then(response => response.json())
+    .then(data => {
+        msg.classList.remove('hidden', 'text-red-500', 'text-emerald-600');
+        msg.innerText = data.message;
+        
+        if(data.status === 'success') {
+            msg.classList.add('text-emerald-600');
+            document.getElementById('subscriberEmail').value = '';
+            btn.innerText = 'Thank You';
+        } else {
+            msg.classList.add('text-red-500');
+            btn.innerText = 'Subscribe';
+        }
+    });
+});
+
     let current = 0;
     const slides = document.querySelectorAll('.slide');
     const bars = document.querySelectorAll('.progress-line');

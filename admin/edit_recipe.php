@@ -68,12 +68,38 @@ include '../includes/header.php';
 ?>
 
 <div class="flex min-h-screen bg-slate-50">
-    <aside class="w-64 bg-emerald-900 text-white hidden lg:flex flex-col shrink-0">
-        <div class="p-6 text-2xl font-black tracking-tighter">FOOD<span class="text-emerald-400">FUSION</span></div>
-        <nav class="flex-grow mt-4">
-            <a href="dashboard.php" class="block px-6 py-4 text-emerald-100 hover:bg-emerald-800 transition font-medium">Dashboard Overview</a>
-            <a href="manage_recipes.php" class="block px-6 py-4 bg-emerald-800 border-l-4 border-emerald-400 font-bold">Manage Recipes</a>
+    <aside class="w-72 bg-emerald-900 text-white hidden lg:flex flex-col shrink-0 shadow-2xl">
+        <div class="p-8">
+            <div class="text-2xl font-black tracking-tighter italic">FOOD<span class="text-emerald-400 font-normal">FUSION</span></div>
+            <p class="text-[10px] text-emerald-400/50 uppercase tracking-[0.3em] font-bold mt-1">Admin Control Panel</p>
+        </div>
+        
+        <nav class="flex-grow px-4 space-y-2">
+            <a href="index.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Dashboard Overview
+            </a>
+            <a href="manage_recipes.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Manage Recipes
+            </a>
+            <a href="manage_users.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                User Management
+            </a>
+            <a href="manage_subscribers.php" class="flex items-center gap-3 px-6 py-4 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 font-bold shadow-lg shadow-emerald-900/50">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                Newsletter Subs
+            </a>
+            <a href="manage_community.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Cookbook Management
+            </a>
         </nav>
+
+        <div class="p-8 border-t border-emerald-800/50">
+            <a href="../auth/logout.php" class="text-xs font-bold text-emerald-100/40 hover:text-red-400 transition-colors uppercase tracking-widest">Sign Out</a>
+        </div>
     </aside>
 
     <main class="flex-grow p-8">

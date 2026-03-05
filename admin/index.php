@@ -21,15 +21,39 @@ include '../includes/header.php';
 ?>
 
 <div class="flex min-h-screen bg-slate-50">
-   <aside class="w-64 bg-emerald-900 text-white hidden lg:flex flex-col shrink-0">
-        <div class="p-6 text-2xl font-black tracking-tighter">FOOD<span class="text-emerald-400">FUSION</span></div>
-        <nav class="flex-grow mt-4">
-            <a href="index.php" class="block px-6 py-4 bg-emerald-800 border-l-4 border-emerald-400 font-bold">Dashboard Overview</a>
-            <a href="manage_recipes.php" class="block px-6 py-4 text-emerald-100 hover:bg-emerald-800 transition font-medium">Manage Recipes</a>
-            <a href="manage_users.php" class="block px-6 py-4 text-emerald-100 hover:bg-emerald-800 transition font-medium">User Management</a>
-            <a href="manage_community.php" class="block px-6 py-4 text-emerald-100 hover:bg-emerald-800 transition font-medium">Cookbook Management</a>
-            <a href="manage_messages.php" class="block px-6 py-4 text-emerald-100 hover:bg-emerald-800 transition font-medium">Contact Messages</a>
+   <aside class="w-72 bg-emerald-900 text-white hidden lg:flex flex-col shrink-0 shadow-2xl">
+        <div class="p-8">
+            <div class="text-2xl font-black tracking-tighter italic">FOOD<span class="text-emerald-400 font-normal">FUSION</span></div>
+            <p class="text-[10px] text-emerald-400/50 uppercase tracking-[0.3em] font-bold mt-1">Admin Control Panel</p>
+        </div>
+        
+        <nav class="flex-grow px-4 space-y-2">
+            <a href="index.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Dashboard Overview
+            </a>
+            <a href="manage_recipes.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Manage Recipes
+            </a>
+            <a href="manage_users.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                User Management
+            </a>
+            <a href="manage_subscribers.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Subscribe Management
+            </a>
+
+            <a href="manage_community.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Cookbook Management
+            </a>
         </nav>
+
+        <div class="p-8 border-t border-emerald-800/50">
+            <a href="../auth/logout.php" class="text-xs font-bold text-emerald-100/40 hover:text-red-400 transition-colors uppercase tracking-widest">Sign Out</a>
+        </div>
     </aside>
 
     <main class="flex-grow p-8">
@@ -38,7 +62,6 @@ include '../includes/header.php';
                 <h1 class="text-3xl font-bold text-slate-800 tracking-tight">Admin Dashboard</h1>
                 <p class="text-slate-500 mt-1">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Admin'); ?>.</p>
             </div>
-            <a href="../auth/logout.php" class="bg-white border border-slate-200 px-5 py-2 rounded-xl text-sm font-bold text-red-600 hover:bg-red-50 transition">Logout</a>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
