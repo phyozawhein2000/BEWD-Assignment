@@ -4,6 +4,15 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 include 'includes/header.php'; 
 include 'includes/navbar.php'; 
+require_once 'config/db.php';
+
+try {
+    // အသစ်ဆုံးတင်ထားတဲ့ Recipe ၄ ခုကို ဆွဲထုတ်မယ်
+    $stmt = $pdo->query("SELECT * FROM recipes ORDER BY created_at DESC LIMIT 4");
+    $latest_recipes = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $latest_recipes = [];
+}
 ?>
 
 <section class="relative h-[85vh] w-full bg-white overflow-hidden">
@@ -42,32 +51,45 @@ include 'includes/navbar.php';
         <h2 class="text-4xl font-serif text-stone-900 mt-4">Seasonal Inspiration</h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
-        <a href="#" class="group block">
-            <div class="aspect-[4/5] overflow-hidden bg-stone-100 mb-8">
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
-            </div>
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="text-2xl font-serif text-stone-800">Spring Greens Bowl</h3>
-                    <p class="text-stone-400 text-sm mt-2">15 Minutes — Beginner</p>
-                </div>
-                <span class="text-emerald-600">→</span>
-            </div>
-        </a>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-32">
+        <?php if (!empty($latest_recipes)): ?>
+            <?php foreach ($latest_recipes as $index => $r): ?>
+                <a href="recipe_detail.php?id=<?php echo $r['recipe_id']; ?>" 
+                   class="group block <?php echo ($index % 2 != 0) ? 'md:mt-24' : ''; ?>">
+                    
+                    <div class="aspect-[4/5] overflow-hidden bg-stone-100 mb-8 relative">
+                        <img src="<?php echo htmlspecialchars($r['image_url']); ?>" 
+                             class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                             alt="<?php echo htmlspecialchars($r['title']); ?>">
+                        
+                        <div class="absolute top-6 left-6">
+                            <span class="bg-white/90 backdrop-blur px-3 py-1 text-[9px] font-black uppercase tracking-widest text-stone-800">
+                                <?php echo htmlspecialchars($r['cuisine_type']); ?>
+                            </span>
+                        </div>
+                    </div>
 
-        <a href="#" class="group block mt-0 md:mt-24">
-            <div class="aspect-[4/5] overflow-hidden bg-stone-100 mb-8">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
-            </div>
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="text-2xl font-serif text-stone-800">Stone-Fired Pizza</h3>
-                    <p class="text-stone-400 text-sm mt-2">45 Minutes — Intermediate</p>
-                </div>
-                <span class="text-emerald-600">→</span>
-            </div>
-        </a>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-serif text-stone-800 group-hover:text-emerald-700 transition-colors">
+                                <?php echo htmlspecialchars($r['title']); ?>
+                            </h3>
+                            <p class="text-stone-400 text-sm mt-2">
+                                <?php echo htmlspecialchars($r['cuisine_type']); ?> Level — 
+                                <span class="capitalize px-2 py-1 bg-stone-200 text-stone-800 text-xs font-bold">
+                                    <?php echo htmlspecialchars($r['difficulty']); ?>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="w-10 h-10 border border-stone-200 rounded-full flex items-center justify-center group-hover:bg-emerald-600 group-hover:border-emerald-600 group-hover:text-white transition-all">
+                            <span class="text-lg">→</span>
+                        </div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="col-span-2 text-center text-stone-400 italic">No seasonal recipes found.</p>
+        <?php endif; ?>
     </div>
 </main>
 

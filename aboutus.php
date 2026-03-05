@@ -16,7 +16,7 @@ include 'includes/navbar.php';
         <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-800 rounded-full blur-3xl opacity-50"></div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 -mt-12">
+    <main class="max-w-6xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
             <div class="bg-white p-12 rounded-[3rem] shadow-xl shadow-stone-200/50 border border-stone-100">
                 <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-8">

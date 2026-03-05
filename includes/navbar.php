@@ -71,7 +71,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="flex items-center space-x-4 border-r pr-6 border-stone-200">
                     <div class="text-right">
                         <p class="text-[10px] uppercase font-bold text-stone-400 mb-0.5">Welcome back,</p>
-                        <p class="text-sm font-black text-stone-800 leading-none"><?php echo htmlspecialchars($_SESSION['user_name']); ?></p>
+                        <a href="profile.php" class="text-sm font-black text-stone-800 leading-none"><?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
                     </div>
                     <?php if($_SESSION['role'] === 'admin'): ?>
                         <a href="admin/dashboard.php" class="bg-amber-100 text-amber-700 p-2 rounded-xl hover:bg-amber-200 transition">

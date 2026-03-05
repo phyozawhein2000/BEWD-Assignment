@@ -56,25 +56,12 @@ try {
         
         <div class="lg:col-span-2 space-y-12">
             <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border border-stone-100">
-                <h2 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
-                    <span class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-sm">01</span>
+                <h3 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
                     About this Recipe
-                </h2>
+                </h3>
                 <p class="text-stone-600 leading-relaxed text-lg italic mb-8">
-                    "<?php echo nl2br(htmlspecialchars($recipe['description'])); ?>"
+                    <?php echo nl2br(htmlspecialchars($recipe['description'])); ?>
                 </p>
-
-                <hr class="border-stone-100 mb-8">
-
-                <h2 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
-                    <span class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-sm">02</span>
-                    Cooking Instructions
-                </h2>
-                <div class="prose prose-emerald max-w-none text-stone-600">
-                    <p class="whitespace-pre-line font-medium leading-loose">
-                        <?php echo htmlspecialchars($recipe['description']); ?>
-                    </p>
-                </div>
             </div>
         </div>
 

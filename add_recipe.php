@@ -68,18 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Cuisine Type</label>
-                        <select name="cuisine" class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-stone-600">
-                            <option value="Myanmar">Myanmar</option>
-                            <option value="Italian">Italian</option>
-                            <option value="Thai">Thai</option>
-                            <option value="Chinese">Chinese</option>
-                        </select>
+                        <input type="text" name="cuisine" required placeholder="e.g. Burmese, Italian..." 
+                               class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-slate-700">         
                     </div>
                     <div>
                         <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Difficulty</label>
                         <select name="difficulty" class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-stone-600">
                             <option value="Easy">Easy</option>
-                            <option value="Intermediate">Intermediate</option>
+                            <option value="Intermediate">Medium</option>
                             <option value="Hard">Hard</option>
                         </select>
                     </div>
