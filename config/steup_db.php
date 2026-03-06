@@ -1,8 +1,8 @@
 <?php
-require_once 'db.php'; // အရင်ရေးခဲ့တဲ့ connection file ကို ခေါ်သုံးခြင်း
+require_once 'db.php'; //connection
 
 try {
-    // 1. Users Table (Task 2 အတွက် lockout logic ပါဝင်သည်) [cite: 50]
+    // 1. Users Table
     $sql_users = "CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         first_name VARCHAR(50) NOT NULL,
@@ -15,7 +15,7 @@ try {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB;";
 
-    // 2. Recipes Table (Recipe Collection အတွက်) [cite: 29, 55]
+    // 2. Recipes Table
     $sql_recipes = "CREATE TABLE IF NOT EXISTS recipes (
         recipe_id INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(150) NOT NULL,
@@ -27,7 +27,7 @@ try {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB;";
 
-    // 3. Community Cookbook Table (Foreign Key ပါဝင်သည်) [cite: 30, 45, 56]
+    // 3. Community Cookbook Table
     $sql_cookbook = "CREATE TABLE IF NOT EXISTS community_cookbook (
         submission_id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT,
@@ -36,7 +36,7 @@ try {
         submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB;";
-    //4. Contact Form Table (User Feedback အတွက်) [cite: 57]
+    //4. Contact Form Table
     $sql_contact = "CREATE TABLE IF NOT EXISTS contact_messages (
         message_id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL,

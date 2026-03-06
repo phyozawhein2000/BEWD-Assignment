@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Delete Logic (Column name 'recipe_id' ကို အသုံးပြုထားသည်)
+// Delete Logic use recipe_id as identifier
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $stmt = $pdo->prepare("DELETE FROM recipes WHERE recipe_id = ?");
@@ -17,7 +17,7 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// Fetch All Recipes (Column name 'recipe_id' ကို အသုံးပြုထားသည်)
+// Fetch All Recipes to display in the table
 $recipes = $pdo->query("SELECT * FROM recipes ORDER BY recipe_id DESC")->fetchAll();
 
 include '../includes/header.php';
@@ -43,9 +43,9 @@ include '../includes/header.php';
                 <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
                 User Management
             </a>
-            <a href="manage_subscribers.php" class="flex items-center gap-3 px-6 py-4 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 font-bold shadow-lg shadow-emerald-900/50">
-                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                Newsletter Subs
+            <a href="manage_subscribers.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
+                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
+                Subscribe Management
             </a>
             <a href="manage_community.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
                 <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>

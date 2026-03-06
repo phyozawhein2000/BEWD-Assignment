@@ -14,7 +14,7 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $cuisine_type = $_POST['cuisine_type']; // Category နေရာမှာ သုံးမယ်
+    $cuisine_type = $_POST['cuisine_type']; // Category 
     $dietary_preference = $_POST['dietary_preference'];
     $difficulty = $_POST['difficulty'];
     
@@ -30,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
         try {
-            // သင့်ရဲ့ Table Column နာမည်များအတိုင်း ပြင်ဆင်ထားသည်
-            $stmt = $pdo->prepare("INSERT INTO recipes (title, description, cuisine_type, dietary_preference, difficulty, image_url) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$title, $description, $cuisine_type, $dietary_preference, $difficulty, $db_image_path]);
+            
+            $stmt = $pdo->prepare("INSERT INTO recipes (title, description, cuisine_type, dietary_preference, difficulty, image_url,user_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$title, $description, $cuisine_type, $dietary_preference, $difficulty, $db_image_path, $_SESSION['user_id']]);
             $success = "Recipe added successfully!";
         } catch (PDOException $e) {
             $error = "Database Error: " . $e->getMessage();

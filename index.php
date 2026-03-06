@@ -110,6 +110,33 @@ try {
         </form>
     </div>
 </section>
+<div id="cookie-overlay" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500">
+    <div id="cookie-modal" class="bg-white max-w-sm w-[90%] p-10 rounded-[3rem] shadow-2xl text-center transform scale-90 transition-all duration-500">
+        <div class="w-16 h-16 bg-orange-50 rounded-3xl flex items-center justify-center mx-auto mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </div>
+
+        <h3 class="text-xl font-serif text-stone-900 mb-4 italic">Cookie Settings</h3>
+        <p class="text-stone-500 text-sm font-light leading-relaxed mb-10">
+            ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများကို အကောင်းဆုံးအသုံးချနိုင်ရန် Cookies များကို လက်ခံပေးဖို့ လိုအပ်ပါသည်။
+        </p>
+
+        <div class="flex flex-col gap-3">
+            <button id="accept-cookies" class="w-full bg-stone-900 text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-orange-600 transition-colors shadow-lg shadow-stone-900/20">
+                Accept All
+            </button>
+            <button id="decline-cookies" class="w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 hover:text-stone-900 transition-colors">
+                Necessary Only
+            </button>
+        </div>
+
+        <p class="mt-8 text-[9px] text-stone-300 uppercase tracking-widest leading-loose">
+            Read our <a href="privacy.php" class="underline hover:text-orange-500">Privacy Policy</a>
+        </p>
+    </div>
+</div>
 
 <script>
 document.getElementById('newsletterForm').addEventListener('submit', function(e) {
@@ -168,6 +195,42 @@ document.getElementById('newsletterForm').addEventListener('submit', function(e)
     }
 
     animateBar(0);
+ 
+document.addEventListener("DOMContentLoaded", function() {
+    const overlay = document.getElementById('cookie-overlay');
+    const modal = document.getElementById('cookie-modal');
+    const acceptBtn = document.getElementById('accept-cookies');
+    const declineBtn = document.getElementById('decline-cookies');
+
+    // Consent မရှိသေးရင် ပြမယ်
+    if (!localStorage.getItem('cookie_consent')) {
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100');
+            modal.classList.remove('scale-90');
+            modal.classList.add('scale-100');
+        }, 1000);
+    }
+
+    // ပိတ်တဲ့ Function
+    function closeCookieModal() {
+        modal.classList.remove('scale-100');
+        modal.classList.add('scale-90');
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => overlay.remove(), 600);
+    }
+
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookie_consent', 'accepted');
+        closeCookieModal();
+    });
+
+    declineBtn.addEventListener('click', () => {
+        localStorage.setItem('cookie_consent', 'essential');
+        closeCookieModal();
+    });
+});    
 </script>
 
 <style>

@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cuisine_type = $_POST['cuisine_type'];
     $dietary_preference = $_POST['dietary_preference'];
     $difficulty = $_POST['difficulty'];
-    $image_url = $recipe['image_url']; // Default အနေနဲ့ ပုံဟောင်းကို သုံးမည်
+    $image_url = $recipe['image_url']; // Default 
 
-    // ဓာတ်ပုံအသစ် တင်ထားခြင်း ရှိမရှိ စစ်ဆေးခြင်း
+    // Image Upload Logic
     if (!empty($_FILES["image"]["name"])) {
         $target_dir = "../uploads/recipes/";
         $file_name = time() . '_' . basename($_FILES["image"]["name"]);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$title, $description, $cuisine_type, $dietary_preference, $difficulty, $image_url, $recipe_id]);
         
         $success = "Recipe updated successfully!";
-        // Update ဖြစ်ပြီးနောက် အချက်အလက်အသစ်ကို ပြန်ဆွဲထုတ်ရန်
+        // Update 
         header("Refresh: 1; URL=manage_recipes.php");
     } catch (PDOException $e) {
         $error = "Database Error: " . $e->getMessage();

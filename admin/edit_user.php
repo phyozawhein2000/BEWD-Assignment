@@ -2,7 +2,7 @@
 require_once '../config/db.php';
 session_start();
 
-// Admin မဟုတ်လျှင် ပေးမဝင်ရန် တားဆီးခြင်း
+// Admin Security Check
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
     exit();
@@ -11,14 +11,13 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 $error = '';
 $success = '';
 
-// 1. URL ကနေ ID ရယူခြင်း (သင့် table က id သို့မဟုတ် user_id ဖြစ်နိုင်သည်)
+// 1. URL User ID
 if (!isset($_GET['id'])) {
     header("Location: manage_users.php");
     exit();
 }
 $u_id = $_GET['id'];
-
-// 2. လက်ရှိ User အချက်အလက်ကို ဆွဲထုတ်ခြင်း
+// 2. Fetch Current User Data
 try {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$u_id]);
@@ -41,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $update_stmt->execute([$new_role, $u_id]);
         
         $success = "User role updated successfully!";
-        // ၁ စက္ကန့်အကြာတွင် မူလစာမျက်နှာသို့ ပြန်ပို့မည်
+        // Refresh to show updated data
         header("Refresh: 1; URL=manage_users.php");
     } catch (PDOException $e) {
         $error = "Update failed: " . $e->getMessage();
