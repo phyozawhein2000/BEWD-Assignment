@@ -36,6 +36,8 @@ try {
         submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB;";
+    $sql = "ALTER TABLE community_cookbook 
+            ADD COLUMN image_url VARCHAR(255) AFTER recipe_content";
     //4. Contact Form Table
     $sql_contact = "CREATE TABLE IF NOT EXISTS contact_messages (
         message_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,8 +48,9 @@ try {
         status ENUM('unread', 'read') DEFAULT 'unread',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB;";
-
-    $sql_subscibe = "CREATE TABLE subscribers (
+    
+    //5. Subscribers Table
+    $sql_subscibe = "CREATE TABLE IF NOT EXISTS subscribers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(255) NOT NULL UNIQUE,
         subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -59,8 +62,10 @@ try {
     $pdo->exec($sql_cookbook);
     $pdo->exec($sql_contact);
     $pdo->exec($sql_subscibe);
+    $pdo->exec($sql);
+    echo "Table updated successfully! Image column added.";
 
-    echo "Database tables created successfully! [cite: 44]";
+    // echo "Database tables created successfully! [cite: 44]";
 
 } catch (PDOException $e) {
     die("Error creating tables: " . $e->getMessage());

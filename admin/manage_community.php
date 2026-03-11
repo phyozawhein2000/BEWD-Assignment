@@ -104,51 +104,71 @@ include '../includes/header.php';
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-stone-50 text-stone-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                            <th class="px-8 py-5">Author</th>
+                            <th class="px-8 py-5">User</th>
                             <th class="px-8 py-5">Recipe Info</th>
                             <th class="px-8 py-5">Submitted At</th>
                             <th class="px-8 py-5 text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-stone-50">
-                        <?php foreach ($submissions as $row): ?>
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-8 py-6">
-                                <div class="font-bold text-slate-700">
-                                    <?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?>
-                                </div>
-                                <div class="text-[11px] text-stone-400 font-medium italic">
-                                    <?php echo htmlspecialchars($row['email']); ?>
-                                </div>
-                            </td>
-                            <td class="px-8 py-6">
-                                <div class="font-bold text-emerald-700 text-sm mb-1">
-                                    <?php echo htmlspecialchars($row['recipe_title']); ?>
-                                </div>
-                                <div class="text-[11px] text-slate-500 truncate max-w-xs font-medium">
-                                    <?php echo substr(htmlspecialchars($row['recipe_content']), 0, 60); ?>...
-                                </div>
-                            </td>
-                            <td class="px-8 py-6 text-stone-400 text-xs font-medium uppercase">
-                                <?php echo date('M d, Y', strtotime($row['submitted_at'])); ?>
-                            </td>
-                            <td class="px-8 py-6">
-                                <div class="flex items-center justify-end space-x-4">
-                                    <a href="view_submission.php?id=<?php echo $row['submission_id']; ?>" 
-                                       class="text-emerald-600 hover:text-emerald-800 font-extrabold text-[11px] uppercase tracking-tighter transition">
-                                        View
-                                    </a>
-                                    <span class="text-stone-200">|</span>
-                                    <a href="manage_community.php?delete_id=<?php echo $row['submission_id']; ?>" 
-                                       onclick="return confirm('Remove this recipe from the cookbook?')"
-                                       class="text-red-400 hover:text-red-600 font-extrabold text-[11px] uppercase tracking-tighter transition">
-                                        Delete
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+    <?php foreach ($submissions as $row): ?>
+    <tr class="hover:bg-slate-50 transition-colors">
+        <td class="px-8 py-6">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center font-black text-emerald-800 border-2 border-white shadow-sm shrink-0">
+                    <?php echo substr($row['first_name'], 0, 1); ?>
+                </div>
+                <div>
+                    <div class="font-bold text-slate-700 leading-none mb-1">
+                        <?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?>
+                    </div>
+                    <div class="text-[10px] text-stone-400 font-medium italic">
+                        <?php echo htmlspecialchars($row['email']); ?>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="px-8 py-6">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-12 rounded-lg bg-stone-100 overflow-hidden border border-stone-200 shrink-0">
+                    <?php if (!empty($row['image_url']) && $row['image_url'] !== 'default_recipe.jpg'): ?>
+                        <img src="../uploads/cookbook/<?php echo htmlspecialchars($row['image_url']); ?>" class="w-full h-full object-cover">
+                    <?php else: ?>
+                        <div class="w-full h-full flex items-center justify-center text-[8px] text-stone-300 font-bold uppercase">No Pic</div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="min-w-0">
+                    <div class="font-bold text-emerald-700 text-sm mb-0.5 truncate max-w-[200px]">
+                        <?php echo htmlspecialchars($row['recipe_title']); ?>
+                    </div>
+                    <div class="text-[11px] text-slate-500 truncate max-w-[200px] font-medium">
+                        <?php echo substr(htmlspecialchars($row['recipe_content']), 0, 50); ?>...
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="px-8 py-6 text-stone-400 text-xs font-medium uppercase">
+            <?php echo date('M d, Y', strtotime($row['submitted_at'])); ?>
+        </td>
+        <td class="px-8 py-6">
+            <div class="flex items-center justify-end space-x-4">
+                <a href="view_submission.php?id=<?php echo $row['submission_id']; ?>" 
+                   class="text-emerald-600 hover:text-emerald-800 font-extrabold text-[11px] uppercase tracking-tighter transition">
+                    View
+                </a>
+                <span class="text-stone-200">|</span>
+                <a href="manage_community.php?delete_id=<?php echo $row['submission_id']; ?>" 
+                   onclick="return confirm('Remove this recipe from the cookbook?')"
+                   class="text-red-400 hover:text-red-600 font-extrabold text-[11px] uppercase tracking-tighter transition">
+                    Delete
+                </a>
+            </div>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</tbody>
+                   
                 </table>
             </div>
 

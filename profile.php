@@ -53,17 +53,56 @@ include 'includes/navbar.php';
             <button onclick="switchTab('recipes')" id="btn-recipes" class="tab-btn pb-4 text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 hover:text-stone-900 transition-colors">Official Recipes (<?php echo count($my_recipes); ?>)</button>
         </div>
 
-        <div id="tab-cookbook" class="tab-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <?php foreach ($my_posts as $post): ?>
-                    <div class="bg-white p-8 rounded-[2rem] border border-stone-100 shadow-sm hover:shadow-md transition-all">
-                        <h4 class="font-serif text-xl italic mb-4 text-stone-800">"<?php echo htmlspecialchars($post['recipe_title']); ?>"</h4>
-                        <p class="text-stone-500 text-sm font-light line-clamp-2 mb-6"><?php echo htmlspecialchars($post['recipe_content']); ?></p>
-                        <a href="view_community_recipe.php?id=<?php echo $post['submission_id']; ?>" class="text-[9px] font-black uppercase tracking-widest text-emerald-600">Read More →</a>
+      <div id="tab-cookbook" class="tab-content">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php foreach ($my_posts as $post): ?>
+            <div class="group bg-white rounded-[2.5rem] border border-stone-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col">
+                
+                <div class="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                    <?php if (!empty($post['image_url']) && $post['image_url'] !== 'default_recipe.jpg'): ?>
+                        <img src="uploads/cookbook/<?php echo htmlspecialchars($post['image_url']); ?>" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                             alt="Recipe image">
+                    <?php else: ?>
+                        <div class="w-full h-full flex items-center justify-center text-stone-300 italic text-[10px] uppercase font-black tracking-widest">
+                            No Photo Uploaded
+                        </div>
+                    <?php endif; ?>
+                    
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-black/20 backdrop-blur-md text-[8px] font-black text-white px-3 py-1 rounded-full uppercase tracking-widest">
+                            <?php echo date('M d', strtotime($post['submitted_at'])); ?>
+                        </span>
                     </div>
-                <?php endforeach; ?>
+                </div>
+
+                <div class="p-8 flex-grow">
+                    <h4 class="font-serif text-xl italic mb-3 text-stone-800 leading-tight">
+                        "<?php echo htmlspecialchars($post['recipe_title']); ?>"
+                    </h4>
+                    <p class="text-stone-500 text-sm font-light line-clamp-3 mb-6 italic">
+                        <?php echo htmlspecialchars($post['recipe_content']); ?>
+                    </p>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-stone-50">
+                        <a href="view_community_recipe.php?id=<?php echo $post['submission_id']; ?>" 
+                           class="text-[9px] font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-800 transition-colors">
+                            Read Full Story →
+                        </a>
+                        
+                        </div>
+                </div>
             </div>
-        </div>
+        <?php endforeach; ?>
+
+        <?php if(empty($my_posts)): ?>
+            <div class="col-span-full py-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-stone-100">
+                <p class="text-stone-400 italic font-light tracking-wide">You haven't shared any recipes yet.</p>
+                <a href="submit_cookbook.php" class="inline-block mt-4 text-emerald-600 font-black text-[10px] uppercase tracking-widest border-b border-emerald-600">Start Sharing</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
 
         <div id="tab-recipes" class="tab-content hidden">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

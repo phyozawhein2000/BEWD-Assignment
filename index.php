@@ -7,88 +7,184 @@ include 'includes/navbar.php';
 require_once 'config/db.php';
 
 try {
-    // အသစ်ဆုံးတင်ထားတဲ့ Recipe ၄ ခုကို ဆွဲထုတ်မယ်
-    $stmt = $pdo->query("SELECT * FROM recipes ORDER BY created_at DESC LIMIT 4");
+    // အသစ်ဆုံးတင်ထားတဲ့ Recipe ၆ ခုကို ဆွဲထုတ်မယ်
+    $stmt = $pdo->query("SELECT * FROM recipes ORDER BY created_at DESC LIMIT 6");
     $latest_recipes = $stmt->fetchAll();
 } catch (PDOException $e) {
     $latest_recipes = [];
 }
 ?>
-
-<section class="relative h-[85vh] w-full bg-white overflow-hidden">
-    <div id="hero-slider" class="absolute inset-0">
-        <div class="slide absolute inset-0 transition-opacity duration-[2000ms] opacity-100">
-            <img src="assets/img/slideshow1.jpg" class="w-full h-full object-cover" alt="Minimalist Food">
-            <div class="absolute inset-0 bg-black/20"></div>
+<div id="joinModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-[2.5rem] max-w-md w-full p-8 shadow-2xl transform transition-all scale-95 opacity-0" id="modalContent">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-2xl font-black text-emerald-800 tracking-tight uppercase">Join FoodFusion</h2>
+                <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mt-1">Create your chef account</p>
+            </div>
+            <button onclick="closeModal()" class="p-2 bg-stone-100 rounded-full text-stone-400 hover:text-stone-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
-        <div class="slide absolute inset-0 transition-opacity duration-[2000ms] opacity-0">
-            <img src="assets/img/slideshow2.jpg" class="w-full h-full object-cover" alt="Salad">
-            <div class="absolute inset-0 bg-black/20"></div>
+
+        <div id="regMessage" class="hidden mb-4"></div>
+
+        <form id="regForm" class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 ml-4">First Name</label>
+                    <input type="text" name="first_name" required placeholder="first name" 
+                           class="w-full bg-stone-50 border border-stone-100 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-emerald-500 transition-all">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 ml-4">Last Name</label>
+                    <input type="text" name="last_name" required placeholder="last name" 
+                           class="w-full bg-stone-50 border border-stone-100 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-emerald-500 transition-all">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 ml-4">Email Address</label>
+                <input type="email" name="email" required placeholder="example@gmail.com" 
+                       class="w-full bg-stone-50 border border-stone-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-emerald-500 transition-all">
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 ml-4">Password</label>
+                <div class="relative">
+                    <input id="regPassword" type="password" name="password" required placeholder="••••••••" 
+                           class="w-full bg-stone-50 border border-stone-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-emerald-500 transition-all">
+                    <button type="button" onclick="toggleRegPassword()" class="absolute right-4 top-4 text-stone-400 hover:text-emerald-600">
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" id="regBtn" class="w-full bg-emerald-800 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-emerald-900/20 hover:bg-stone-900 transition-all mt-2 active:scale-[0.98]">
+                Create Account
+            </button>
+        </form>
+
+        <p class="text-center text-[11px] font-bold text-stone-400 mt-8 pt-6 border-t border-stone-50 uppercase tracking-widest">
+            Already a member? <a href="auth/login.php" class="text-emerald-800 hover:underline">Login here</a>
+        </p>
+    </div>
+</div>
+
+<section class="relative h-[90vh] w-full bg-stone-900 overflow-hidden">
+    <div id="hero-slider" class="absolute inset-0">
+        <div class="slide absolute inset-0 transition-all duration-[2500ms] ease-out opacity-100 scale-110">
+            <img src="assets/img/slideshow1.jpg" class="w-full h-full object-cover grayscale-[0.2]" alt="Minimalist Food">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
+        </div>
+        <div class="slide absolute inset-0 transition-all duration-[2500ms] ease-out opacity-0 scale-100">
+            <img src="assets/img/slideshow2.jpg" class="w-full h-full object-cover grayscale-[0.2]" alt="Salad">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
         </div>
     </div>
 
     <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
-        <h1 class="text-6xl md:text-9xl font-serif text-white tracking-tight mb-6 animate-slide-up">
-            Simply <span class="italic text-emerald-300">Delicious.</span>
-        </h1>
-        <p class="text-white/90 text-lg md:text-xl font-light tracking-wide max-w-xl mb-10">
-            A curated collection of recipes for the modern home cook.
-        </p>
-        <a href="recipes.php" class="border-b-2 border-white text-white py-2 px-4 text-sm font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all border-emerald-600">
-            Enter Kitchen
-        </a>
-    </div>
+    <span class="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-400 mb-8 animate-fade-in">
+        Est. 2024 • Culinary Arts
+    </span>
+    
+    <h1 class="text-7xl md:text-[10rem] font-serif text-white leading-[0.85] tracking-tighter mb-8 animate-slide-up">
+        Simply <br>
+        <span class="italic font-light text-stone-300 ml-12">Delicious.</span>
+    </h1>
 
-    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-8">
-        <div class="h-[2px] w-12 bg-white/20 overflow-hidden"><div class="progress-line h-full bg-white w-0"></div></div>
-        <div class="h-[2px] w-12 bg-white/20 overflow-hidden"><div class="progress-line h-full bg-white w-0"></div></div>
+    <p class="text-white/70 text-sm md:text-lg font-light tracking-[0.1em] max-w-lg mb-12 uppercase animate-fade-in delay-500">
+        A curated collection of recipes for the <span class="text-white font-medium">modern home cook.</span>
+    </p>
+
+   <div class="flex flex-col sm:flex-row items-center gap-6 animate-fade-in delay-700">
+    <a href="recipes.php" class="group relative px-12 py-5 overflow-hidden rounded-full border border-white/30 bg-white/10 backdrop-blur-md transition-all hover:bg-white hover:border-transparent">
+        <span class="relative z-10 text-[10px] font-black uppercase tracking-[0.4em] text-white group-hover:text-black transition-colors">
+            Enter Kitchen
+        </span>
+    </a>
+
+    <?php if (!isset($_SESSION['user_id'])): ?>
+        <button onclick="openModal()" class="group px-12 py-5 rounded-full bg-emerald-800 text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-emerald-700 shadow-xl shadow-emerald-900/20 transition-all active:scale-95 border border-emerald-700">
+            Join Our Community
+        </button>
+    <?php endif; ?>
+</div>
+</div>
+
+    <div class="absolute bottom-12 left-6 md:left-20 z-30 flex flex-col gap-6">
+        <div class="group cursor-pointer flex items-center gap-4 overflow-hidden">
+            <span class="nav-num text-xs font-bold text-white transition-all">01</span>
+            <div class="h-[1px] w-8 bg-white/30 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+        <div class="group cursor-pointer flex items-center gap-4 overflow-hidden">
+            <span class="nav-num text-xs font-bold text-white/30 transition-all">02</span>
+            <div class="h-[1px] w-8 bg-white/10 group-hover:w-16 transition-all duration-500"></div>
+        </div>
     </div>
 </section>
 
-<main class="max-w-6xl mx-auto px-6 py-32">
-    <div class="text-center mb-24">
-        <span class="text-[10px] font-bold tracking-[0.5em] uppercase text-stone-400">The Latest</span>
-        <h2 class="text-4xl font-serif text-stone-900 mt-4">Seasonal Inspiration</h2>
+<main class="max-w-7xl mx-auto px-6 py-32 bg-white">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div class="max-w-xl">
+            <span class="text-[10px] font-black tracking-[0.4em] uppercase text-emerald-600 block mb-4">The Seasonal List</span>
+            <h2 class="text-5xl font-serif text-stone-900 leading-tight italic">Discover Our Latest <span class="text-stone-400 not-italic">Creations</span></h2>
+        </div>
+        <div class="hidden md:block">
+            <a href="recipes.php" class="text-[10px] font-bold uppercase tracking-widest border-b-2 border-stone-900 pb-2 hover:text-emerald-600 hover:border-emerald-600 transition-all">Explore All Recipes</a>
+        </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-32">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-12">
         <?php if (!empty($latest_recipes)): ?>
             <?php foreach ($latest_recipes as $index => $r): ?>
-                <a href="recipe_detail.php?id=<?php echo $r['recipe_id']; ?>" 
-                   class="group block <?php echo ($index % 2 != 0) ? 'md:mt-24' : ''; ?>">
-                    
-                    <div class="aspect-[4/5] overflow-hidden bg-stone-100 mb-8 relative">
-                        <img src="<?php echo htmlspecialchars($r['image_url']); ?>" 
-                             class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                             alt="<?php echo htmlspecialchars($r['title']); ?>">
-                        
-                        <div class="absolute top-6 left-6">
-                            <span class="bg-white/90 backdrop-blur px-3 py-1 text-[9px] font-black uppercase tracking-widest text-stone-800">
-                                <?php echo htmlspecialchars($r['cuisine_type']); ?>
-                            </span>
-                        </div>
-                    </div>
+                <?php 
+                    // ပုံစံကို တစ်လှည့်စီဖြစ်အောင် Grid span တွေကို တွက်ချက်ခြင်း
+                    $isLarge = ($index % 3 == 0); // ၃ ခုမြောက်တိုင်းကို အကြီးပြမယ်
+                    $colSpan = $isLarge ? 'md:col-span-4' : 'md:col-span-4';
+                ?>
+                
+                <div class="<?php echo $colSpan; ?> group">
+                    <a href="recipe_detail.php?id=<?php echo $r['recipe_id']; ?>" class="block">
+                        <div class="relative aspect-[16/10] overflow-hidden rounded-[2rem] bg-stone-100 mb-8 shadow-2xl shadow-stone-200/50">
+                            <img src="<?php echo htmlspecialchars($r['image_url']); ?>" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
+                                 alt="<?php echo htmlspecialchars($r['title']); ?>">
+                            
+                            <div class="absolute top-8 left-8">
+                                <span class="bg-white/10 backdrop-blur-xl border border-white/20 px-4 py-2 text-[9px] font-black uppercase tracking-widest text-white rounded-full">
+                                    <?php echo htmlspecialchars($r['cuisine_type']); ?>
+                                </span>
+                            </div>
 
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-2xl font-serif text-stone-800 group-hover:text-emerald-700 transition-colors">
+                            <div class="absolute inset-0 bg-emerald-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+                                <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 text-white">
+                                    <p class="text-[10px] font-black uppercase tracking-[0.3em] mb-2">View Full Recipe</p>
+                                    <div class="h-[1px] w-12 bg-white/50 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="px-2">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-[9px] font-black uppercase tracking-widest text-emerald-600"><?php echo htmlspecialchars($r['difficulty']); ?> Level</span>
+                                <span class="w-1 h-1 bg-stone-300 rounded-full"></span>
+                                <!-- <span class="text-[9px] font-black uppercase tracking-widest text-stone-400">30 Mins Prep</span> -->
+                            </div>
+                            <h3 class="text-3xl font-serif text-stone-800 leading-snug group-hover:text-emerald-700 transition-colors">
                                 <?php echo htmlspecialchars($r['title']); ?>
                             </h3>
-                            <p class="text-stone-400 text-sm mt-2">
-                                <?php echo htmlspecialchars($r['cuisine_type']); ?> Level — 
-                                <span class="capitalize px-2 py-1 bg-stone-200 text-stone-800 text-xs font-bold">
-                                    <?php echo htmlspecialchars($r['difficulty']); ?>
-                                </span>
-                            </p>
                         </div>
-                        <div class="w-10 h-10 border border-stone-200 rounded-full flex items-center justify-center group-hover:bg-emerald-600 group-hover:border-emerald-600 group-hover:text-white transition-all">
-                            <span class="text-lg">→</span>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p class="col-span-2 text-center text-stone-400 italic">No seasonal recipes found.</p>
+            <div class="col-span-12 py-32 text-center border-2 border-dashed border-stone-100 rounded-[3rem]">
+                <p class="text-stone-400 italic font-serif text-xl">Our kitchen is currently prepping new magic.</p>
+            </div>
         <?php endif; ?>
     </div>
 </main>
@@ -186,13 +282,24 @@ document.getElementById('newsletterForm').addEventListener('submit', function(e)
             }
         }, 50); // 5 seconds total
     }
+function nextSlide() {
+    // လက်ရှိ slide ကို ပျောက်စေပြီး scale လျှော့မယ်
+    slides[current].style.opacity = '0';
+    slides[current].classList.remove('scale-110');
+    slides[current].classList.add('scale-100');
 
-    function nextSlide() {
-        slides[current].style.opacity = '0';
-        current = (current + 1) % slides.length;
-        slides[current].style.opacity = '1';
-        animateBar(current);
-    }
+    current = (current + 1) % slides.length;
+
+    // slide အသစ်ကို ပေါ်လာစေပြီး scale ချဲ့မယ် (Ken Burns Effect)
+    slides[current].style.opacity = '1';
+    slides[current].classList.remove('scale-100');
+    slides[current].classList.add('scale-110');
+    
+    // Pagination နံပါတ်တွေကို အရောင်ပြောင်းမယ်
+    document.querySelectorAll('.nav-num').forEach((el, i) => {
+        el.style.opacity = (i === current) ? '1' : '0.3';
+    });
+}
 
     animateBar(0);
  
@@ -230,7 +337,21 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem('cookie_consent', 'essential');
         closeCookieModal();
     });
-});    
+});
+   function openModal() {
+        const modal = document.getElementById('joinModal');
+        const content = document.getElementById('modalContent');
+        modal.classList.remove('hidden');
+        setTimeout(() => content.classList.remove('scale-95', 'opacity-0'), 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('joinModal');
+        const content = document.getElementById('modalContent');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 200);
+    }    
 </script>
 
 <style>
@@ -245,3 +366,4 @@ document.addEventListener("DOMContentLoaded", function() {
 </style>
 
 <?php include 'includes/footer.php'; ?>
+

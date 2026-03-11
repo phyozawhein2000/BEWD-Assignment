@@ -110,7 +110,7 @@ include '../includes/header.php';
             </div>
             
             <p class="text-center text-sm text-slate-600">
-                Don't have an account? <a href="register.php" class="text-emerald-600 font-semibold hover:text-emerald-500">Register here</a>
+                Don't have an account? <a href="../index.php" class="text-emerald-600 font-semibold hover:text-emerald-500">Register here</a>
             </p>
         </form>
     </div>
