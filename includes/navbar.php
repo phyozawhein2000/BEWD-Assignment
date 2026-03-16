@@ -99,14 +99,34 @@ if (session_status() === PHP_SESSION_NONE) {
             <div class="absolute -bottom-1 left-0 w-0 h-1 bg-emerald-800 transition-all group-hover:w-full"></div>
         </a>
 
-        <div class="hidden md:flex items-center space-x-8 text-[13px] font-bold tracking-widest uppercase">
-            <a href="index.php" class="text-emerald-800 hover:opacity-70 transition">Home</a>
-            <a href="recipes.php" class="text-stone-500 hover:text-emerald-800 transition">Recipes</a>
-            <a href="community.php" class="text-stone-500 hover:text-emerald-800 transition">Community</a>
-            <a href="resources.php" class="text-stone-500 hover:text-emerald-800 transition">Resources</a>
-            <a href="aboutus.php" class="text-stone-500 hover:text-emerald-800 transition">AboutUs</a>
-            <a href="contact.php" class="text-stone-500 hover:text-emerald-800 transition">ContactUs</a>
+       <div class="hidden md:flex items-center space-x-8 text-[13px] font-bold tracking-widest uppercase">
+    <a href="index.php" class="text-emerald-800 hover:opacity-70 transition">Home</a>
+    <a href="recipes.php" class="text-stone-500 hover:text-emerald-800 transition">Recipes</a>
+    <a href="community.php" class="text-stone-500 hover:text-emerald-800 transition">Community</a>
+    
+    <div class="relative group cursor-pointer">
+        <div class="flex items-center gap-1 text-stone-500 group-hover:text-emerald-800 transition py-4">
+            <span>Resources</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+            </svg>
         </div>
+
+        <div class="absolute left-0 w-64 bg-white rounded-2xl shadow-2xl border border-stone-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="p-2">
+                <a href="culinary_resources.php" class="block px-6 py-4 rounded-xl hover:bg-emerald-50 text-stone-600 hover:text-emerald-800 transition">
+                    <span class="block text-xs font-black">Culinary Resources</span>
+                </a>
+                <a href="educational_resources.php" class="block px-6 py-4 rounded-xl hover:bg-emerald-50 text-stone-600 hover:text-emerald-800 transition border-t border-stone-50">
+                    <span class="block text-xs font-black">Educational Resources</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <a href="aboutus.php" class="text-stone-500 hover:text-emerald-800 transition">AboutUs</a>
+    <a href="contact.php" class="text-stone-500 hover:text-emerald-800 transition">ContactUs</a>
+</div>
 
         <div class="hidden md:flex items-center space-x-6">
             <?php if(isset($_SESSION['user_id'])): ?>
@@ -124,7 +144,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="auth/logout.php" class="text-sm font-bold text-red-500 hover:underline">Logout</a>
             <?php else: ?>
                 <button onclick="openModal()" class="bg-emerald-800 text-white px-8 py-3 rounded-full text-sm font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-900/20 transition active:scale-95">
-                    Join Us
+                    Join Community
                 </button>
             <?php endif; ?>
         </div>
@@ -142,20 +162,41 @@ if (session_status() === PHP_SESSION_NONE) {
             </button>
         </div>
 
-        <nav class="space-y-1">
-            <a href="resources.php" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-emerald-50 text-stone-700 font-bold group transition-all">
+       <nav class="space-y-1">
+    <div class="relative">
+        <button onclick="toggleMobileDropdown()" class="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-emerald-50 text-stone-700 font-bold group transition-all">
+            <div class="flex items-center space-x-4">
                 <span class="bg-stone-100 p-2 rounded-xl group-hover:bg-emerald-100 group-hover:text-emerald-800">📚</span>
                 <span>Resources</span>
+            </div>
+            <svg id="arrow-icon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+
+        <div id="mobile-resources-menu" class="hidden overflow-hidden bg-stone-50/50 rounded-2xl mx-2 mt-1 transition-all">
+            <a href="culinary_resources.php" class="flex items-center space-x-4 p-4 pl-12 hover:text-emerald-800 text-stone-600 font-bold text-sm transition-all">
+                <span class="w-1.5 h-1.5 bg-stone-300 rounded-full group-hover:bg-emerald-500"></span>
+                <span>Culinary Resources</span>
             </a>
-            <a href="aboutus.php" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-emerald-50 text-stone-700 font-bold group transition-all">
-                <span class="bg-stone-100 p-2 rounded-xl group-hover:bg-emerald-100 group-hover:text-emerald-800">👋</span>
-                <span>About Us</span>
+            <a href="educational_resources.php" class="flex items-center space-x-4 p-4 pl-12 hover:text-emerald-800 text-stone-600 font-bold text-sm transition-all">
+                <span class="w-1.5 h-1.5 bg-stone-300 rounded-full group-hover:bg-emerald-500"></span>
+                <span>Educational Resources</span>
             </a>
-            <a href="contact.php" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-emerald-50 text-stone-700 font-bold group transition-all">
-                <span class="bg-stone-100 p-2 rounded-xl group-hover:bg-emerald-100 group-hover:text-emerald-800">📧</span>
-                <span>Contact</span>
-            </a>
-        </nav>
+        </div>
+    </div>
+
+    <a href="aboutus.php" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-emerald-50 text-stone-700 font-bold group transition-all">
+        <span class="bg-stone-100 p-2 rounded-xl group-hover:bg-emerald-100 group-hover:text-emerald-800">👋</span>
+        <span>About Us</span>
+    </a>
+
+    <a href="contact.php" class="flex items-center space-x-4 p-4 rounded-2xl hover:bg-emerald-50 text-stone-700 font-bold group transition-all">
+        <span class="bg-stone-100 p-2 rounded-xl group-hover:bg-emerald-100 group-hover:text-emerald-800">📧</span>
+        <span>Contact</span>
+    </a>
+</nav>
+
 
         <div class="mt-auto pt-8 border-t border-stone-100">
             <?php if(isset($_SESSION['user_id'])): ?>
@@ -181,6 +222,20 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <script>
     // Sidebar Control
+    function toggleMobileDropdown() {
+    const menu = document.getElementById('mobile-resources-menu');
+    const arrow = document.getElementById('arrow-icon');
+    
+    // Toggle hidden class
+    menu.classList.toggle('hidden');
+    
+    // Rotate arrow
+    if (menu.classList.contains('hidden')) {
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        arrow.style.transform = 'rotate(180deg)';
+    }
+}
     function toggleMobileSidebar() {
         const sidebar = document.getElementById('mobileSidebar');
         const overlay = document.getElementById('sidebarOverlay');

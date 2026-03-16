@@ -38,6 +38,16 @@ try {
     ) ENGINE=InnoDB;";
     $sql = "ALTER TABLE community_cookbook 
             ADD COLUMN image_url VARCHAR(255) AFTER recipe_content";
+    $sql_1 = "ALTER TABLE community_cookbook 
+              ADD COLUMN difficulty ENUM('Easy', 'Medium', 'Hard') AFTER image_url";
+    $sql_2 = "ALTER TABLE community_cookbook 
+              ADD COLUMN cuisine_type VARCHAR(50) AFTER image_url";
+    $sql_3 = "ALTER TABLE community_cookbook 
+              ADD COLUMN totalLike INT DEFAULT 0 AFTER image_url";
+    $sql_4 = "ALTER TABLE community_cookbook 
+              ADD COLUMN totalComment INT DEFAULT 0 AFTER totalLike";              
+              
+              
     //4. Contact Form Table
     $sql_contact = "CREATE TABLE IF NOT EXISTS contact_messages (
         message_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,13 +66,39 @@ try {
         subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB;";
 
+    $sql_like = "CREATE TABLE IF NOT EXISTS cookbook_likes (
+        like_id INT AUTO_INCREMENT PRIMARY KEY,
+        submission_id INT, 
+        user_id INT,      
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (submission_id) REFERENCES community_cookbook(submission_id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE KEY unique_like (submission_id, user_id) 
+    ) ENGINE=InnoDB;";
+
+    $sql_comment = "CREATE TABLE IF NOT EXISTS cookbook_comments (
+        comment_id INT AUTO_INCREMENT PRIMARY KEY,
+        submission_id INT, 
+        user_id INT,      
+        comment TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (submission_id) REFERENCES community_cookbook(submission_id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB;";
+
     // Execute queries
     $pdo->exec($sql_users);
     $pdo->exec($sql_recipes);
     $pdo->exec($sql_cookbook);
     $pdo->exec($sql_contact);
     $pdo->exec($sql_subscibe);
-    $pdo->exec($sql);
+    // $pdo->exec($sql);
+    // $pdo->exec($sql_1);
+    // $pdo->exec($sql_2);
+    // $pdo->exec($sql_3);
+    $pdo->exec($sql_4);
+    $pdo->exec($sql_like);
+    $pdo->exec($sql_comment);
     echo "Table updated successfully! Image column added.";
 
     // echo "Database tables created successfully! [cite: 44]";

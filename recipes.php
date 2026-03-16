@@ -1,7 +1,5 @@
 <?php 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 include 'includes/header.php'; 
 include 'includes/navbar.php'; 
 require_once 'config/db.php'; 
@@ -9,16 +7,23 @@ require_once 'config/db.php';
 // 1. Search & Filter Logic
 $search = $_GET['search'] ?? '';
 $cuisine = $_GET['cuisine'] ?? 'All';
+$difficulty = $_GET['difficulty'] ?? 'All'; // Difficulty လက်ခံရန်
 
 try {
     // Base Query
     $sql = "SELECT * FROM recipes WHERE title LIKE :search";
     $params = [':search' => "%$search%"];
 
-    // Cuisine Filter (All မဟုတ်လျှင် SQL တွင် ထည့်ပေါင်းမည်)
+    // Cuisine Filter
     if ($cuisine !== 'All') {
         $sql .= " AND cuisine_type = :cuisine";
         $params[':cuisine'] = $cuisine;
+    }
+
+    // Difficulty Filter (အသစ်ထည့်သွင်းလိုက်သော Logic)
+    if ($difficulty !== 'All') {
+        $sql .= " AND difficulty = :difficulty"; // Database field name difficulty ဖြစ်ရပါမည်
+        $params[':difficulty'] = $difficulty;
     }
 
     $sql .= " ORDER BY created_at DESC";
@@ -47,7 +52,7 @@ try {
         <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-stone-100">
             <form action="recipes.php" method="GET" class="grid grid-cols-1 md:grid-cols-12 gap-4">
                 
-                <div class="md:col-span-6 relative">
+                <div class="md:col-span-4 relative">
                     <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" 
                            placeholder="Search by recipe name..." 
                            class="w-full pl-14 pr-6 py-5 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 transition-all font-medium">
@@ -56,7 +61,7 @@ try {
                     </svg>
                 </div>
 
-                <div class="md:col-span-4">
+                <div class="md:col-span-3">
                     <select name="cuisine" onchange="this.form.submit()" 
                             class="w-full px-6 py-5 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-stone-600 appearance-none cursor-pointer">
                         <option value="All" <?php echo $cuisine == 'All' ? 'selected' : ''; ?>>All Cuisines</option>
@@ -68,6 +73,16 @@ try {
                     </select>
                 </div>
 
+                <div class="md:col-span-3">
+                    <select name="difficulty" onchange="this.form.submit()" 
+                            class="w-full px-6 py-5 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-stone-600 appearance-none cursor-pointer">
+                        <option value="All" <?php echo $difficulty == 'All' ? 'selected' : ''; ?>>All Levels</option>
+                        <option value="Easy" <?php echo $difficulty == 'Easy' ? 'selected' : ''; ?>>Easy</option>
+                        <option value="Medium" <?php echo $difficulty == 'Medium' ? 'selected' : ''; ?>>Medium</option>
+                        <option value="Hard" <?php echo $difficulty == 'Hard' ? 'selected' : ''; ?>>Hard</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="md:col-span-2 bg-emerald-800 text-white px-6 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-lg active:scale-95">
                     Search
                 </button>
@@ -75,36 +90,25 @@ try {
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 mt-16 flex flex-col md:flex-row justify-between items-end gap-6">
-        <div>
-            <h2 class="text-3xl font-black text-slate-800 tracking-tighter">
-                <?php 
-                    if ($search) echo "Results for '" . htmlspecialchars($search) . "'";
-                    elseif ($cuisine !== 'All') echo $cuisine . " Specialties";
-                    else echo "Trending Recipes";
-                ?>
-            </h2>
-            <p class="text-stone-400 text-sm font-medium italic mt-1">Showing <?php echo count($recipes); ?> curated recipes.</p>
-        </div>
+   <section class="max-w-7xl mx-auto px-6 mt-16 flex flex-col md:flex-row justify-between items-end gap-6">
+    <div>
+        <h2 class="text-3xl font-black text-slate-800 tracking-tighter">
+            <?php 
+                if ($search) echo "Results for '" . htmlspecialchars($search) . "'";
+                elseif ($cuisine !== 'All') echo $cuisine . " Specialties";
+                else echo "Trending Recipes";
+            ?>
+        </h2>
+        <p class="text-stone-400 text-sm font-medium italic mt-1">Showing <?php echo count($recipes); ?> curated recipes by FoodFusion Chefs.</p>
+    </div>
 
-        <?php if(isset($_SESSION['user_id'])): ?>
-            <a href="add_recipe.php" class="flex items-center gap-3 bg-emerald-100 text-emerald-800 px-8 py-4 rounded-2xl font-black text-sm hover:bg-emerald-800 hover:text-white transition-all group shadow-sm border border-emerald-200">
-                <div class="bg-emerald-800 text-white p-1 rounded-lg group-hover:bg-white group-hover:text-emerald-800 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
-                    </svg>
-                </div>
-                SHARE YOUR RECIPE
-            </a>
-        <?php else: ?>
-            <a href="auth/login.php" class="flex items-center gap-3 bg-stone-100 text-stone-500 px-8 py-4 rounded-2xl font-black text-sm hover:bg-stone-200 transition-all border border-stone-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                </svg>
-                LOGIN TO SHARE
-            </a>
-        <?php endif; ?>
-    </section>
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="community.php" class="flex items-center gap-3 bg-white text-stone-600 px-8 py-4 rounded-2xl font-black text-sm hover:bg-stone-50 transition-all border border-stone-200 shadow-sm group">
+            <span class="text-lg group-hover:scale-110 transition-transform">👩‍🍳</span>
+            BROWSE COMMUNITY STORIES
+        </a>
+    </div>
+</section>
 
     <main class="max-w-7xl mx-auto px-6 py-12">
         <?php if (empty($recipes)): ?>

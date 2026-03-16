@@ -4,90 +4,100 @@ include 'includes/header.php';
 include 'includes/navbar.php'; 
 require_once 'config/db.php';
 
-if (!isset($_GET['id'])) {
-    header("Location: community.php");
-    exit();
+$submission_id = $_GET['id'] ?? null;
+if (!$submission_id) { header("Location: community.php"); exit; }
+
+// Recipe Data ဆွဲထုတ်ခြင်း
+$stmt = $pdo->prepare("SELECT c.*, u.first_name, u.last_name FROM community_cookbook c JOIN users u ON c.user_id = u.id WHERE c.submission_id = ?");
+$stmt->execute([$submission_id]);
+$post = $stmt->fetch();
+
+// Like စစ်ဆေးခြင်း
+$isLiked = false;
+if (isset($_SESSION['user_id'])) {
+    $likeStmt = $pdo->prepare("SELECT 1 FROM cookbook_likes WHERE submission_id = ? AND user_id = ?");
+    $likeStmt->execute([$submission_id, $_SESSION['user_id']]);
+    $isLiked = $likeStmt->fetchColumn();
 }
 
-$submission_id = $_GET['id'];
-
-try {
-    $stmt = $pdo->prepare("SELECT c.*, u.first_name, u.last_name, u.email 
-                          FROM community_cookbook c 
-                          JOIN users u ON c.user_id = u.id 
-                          WHERE c.submission_id = ?");
-    $stmt->execute([$submission_id]);
-    $recipe = $stmt->fetch();
-
-    if (!$recipe) {
-        echo "<div class='py-40 text-center font-serif italic text-stone-400'>Recipe not found.</div>";
-        exit();
-    }
-} catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
-}
+// Comments ဆွဲထုတ်ခြင်း
+$commentStmt = $pdo->prepare("SELECT cc.*, u.first_name FROM cookbook_comments cc JOIN users u ON cc.user_id = u.id WHERE cc.submission_id = ? ORDER BY cc.created_at DESC");
+$commentStmt->execute([$submission_id]);
+$comments = $commentStmt->fetchAll();
 ?>
 
-<div class="bg-stone-50 min-h-screen pb-24">
-    <div class="relative h-[60vh] w-full overflow-hidden bg-stone-900">
-        <?php if (!empty($recipe['image_url']) && $recipe['image_url'] !== 'default_recipe.jpg'): ?>
-            <img src="uploads/cookbook/<?php echo htmlspecialchars($recipe['image_url']); ?>" 
-                 class="w-full h-full object-cover opacity-80" alt="Recipe Hero">
-        <?php else: ?>
-            <div class="w-full h-full flex items-center justify-center bg-emerald-900">
-                <span class="text-white/20 font-serif italic text-6xl">Simply Delicious</span>
+<div class="bg-stone-50 min-h-screen pt-32 pb-20">
+    <article class="max-w-4xl mx-auto px-6">
+        <div class="bg-white rounded-[3rem] p-10 shadow-sm border border-stone-100 mb-10">
+    <h1 class="text-4xl font-black text-slate-800 mb-6"><?php echo htmlspecialchars($post['recipe_title']); ?></h1>
+    
+    <div class="flex flex-wrap items-center justify-between py-6 border-y border-stone-50 gap-4">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-emerald-800 rounded-full flex items-center justify-center text-white font-bold">
+                <?php echo strtoupper(substr($post['first_name'], 0, 1)); ?>
             </div>
-        <?php endif; ?>
-        
-        <div class="absolute inset-0 bg-gradient-to-t from-stone-50 via-transparent to-transparent"></div>
-    </div>
-
-    <article class="max-w-4xl mx-auto px-6 -mt-32 relative z-10">
-        <div class="bg-white rounded-[3rem] shadow-2xl shadow-stone-200/50 p-8 md:p-16 border border-stone-100">
-            
-            <div class="flex items-center gap-3 mb-8">
-                <span class="bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
-                    Community Recipe
-                </span>
-                <span class="h-[1px] w-8 bg-stone-200"></span>
-                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                    <?php echo date('F d, Y', strtotime($recipe['submitted_at'])); ?>
-                </span>
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-serif italic text-stone-900 leading-tight mb-10">
-                <?php echo htmlspecialchars($recipe['recipe_title']); ?>
-            </h1>
-
-            <div class="flex items-center gap-5 p-6 bg-stone-50 rounded-3xl mb-12 border border-stone-100">
-                <div class="w-14 h-14 bg-emerald-800 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg">
-                    <?php echo strtoupper(substr($recipe['first_name'], 0, 1)); ?>
-                </div>
-                <div>
-                    <p class="text-[10px] font-black uppercase text-stone-400 tracking-tighter mb-1">Shared by</p>
-                    <p class="text-lg font-bold text-stone-900 leading-none">
-                        <?php echo htmlspecialchars($recipe['first_name'] . ' ' . $recipe['last_name']); ?>
-                    </p>
-                </div>
-            </div>
-
-            <div class="prose prose-stone max-w-none">
-                <h3 class="text-xs font-black uppercase text-emerald-600 tracking-[0.3em] mb-8 flex items-center gap-4">
-                    The Kitchen Story <span class="h-[1px] flex-grow bg-emerald-100"></span>
-                </h3>
-                <div class="text-stone-700 text-lg md:text-xl leading-relaxed font-light italic whitespace-pre-line">
-                    <?php echo nl2br(htmlspecialchars($recipe['recipe_content'])); ?>
-                </div>
-            </div>
-
-            <div class="mt-20 pt-10 border-t border-stone-100 flex flex-col md:flex-row items-center justify-between gap-6">
-                <a href="community.php" class="text-stone-400 hover:text-emerald-700 transition-colors font-bold text-xs uppercase tracking-widest flex items-center gap-2">
-                    ← Back to Cookbook
-                </a>
-                <button onclick="window.print()" class="px-8 py-3 bg-stone-900 text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-emerald-700 transition-all">
-                    Print Recipe
-                </button>
+            <div>
+                <p class="text-[10px] font-black uppercase text-stone-400">Shared by</p>
+                <p class="font-bold text-slate-700"><?php echo htmlspecialchars($post['first_name'] . ' ' . $post['last_name']); ?></p>
             </div>
         </div>
+        
+        <div class="flex items-center gap-3">
+            <a href="toggle_like.php?id=<?php echo $submission_id; ?>" 
+               class="flex items-center gap-3 px-6 py-3 rounded-2xl transition-all <?php echo $isLiked ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'; ?> font-black text-xs uppercase">
+                <span><?php echo $isLiked ? '❤️ Liked' : '🤍 Like'; ?></span>
+                <span class="opacity-50"><?php echo $post['totalLike']; ?></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-4">
+    <span class="px-4 py-1.5 bg-stone-100 text-stone-600 rounded-full text-xs font-black uppercase tracking-widest border border-stone-200">
+        Cuisine: <?php echo htmlspecialchars($post['cuisine_type'] ?? 'N/A'); ?>
+    </span>
+    <span class="px-4 py-1.5 bg-stone-100 text-stone-600 rounded-full text-xs font-black uppercase tracking-widest border border-stone-200">
+        Difficulty: <?php echo htmlspecialchars($post['difficulty'] ?? 'N/A'); ?>
+    </span>
+</div>
+
+<div class="mt-8 prose prose-stone max-w-none italic text-stone-600 leading-relaxed break-words">
+    <?php echo nl2br(htmlspecialchars($post['recipe_content'])); ?>
+</div>
+
+</div>
+
+        <section class="bg-white rounded-[3rem] p-10 shadow-sm border border-stone-100">
+            <h3 class="text-2xl font-black text-slate-800 mb-8">Comments (<?php echo count($comments); ?>)</h3>
+
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <form action="post_comment.php" method="POST" class="mb-12">
+                    <input type="hidden" name="submission_id" value="<?php echo $submission_id; ?>">
+                    <textarea name="comment" required class="w-full p-6 bg-stone-50 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 mb-4" placeholder="Share your thoughts..."></textarea>
+                    <button type="submit" class="bg-emerald-800 text-white px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all">Post Comment</button>
+                </form>
+            <?php else: ?>
+                <div class="bg-stone-50 p-8 rounded-2xl text-center mb-10 border border-dashed border-stone-200">
+                    <p class="text-stone-500 italic text-sm">Please <a href="auth/login.php" class="text-emerald-700 font-bold underline">Login</a> to join the conversation.</p>
+                </div>
+            <?php endif; ?>
+
+            <div class="space-y-6">
+                <?php foreach ($comments as $c): ?>
+                    <div class="group relative bg-stone-50/50 p-6 rounded-2xl border border-stone-100 transition-all hover:bg-white hover:shadow-md">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-black text-emerald-800 uppercase tracking-widest"><?php echo htmlspecialchars($c['first_name']); ?></span>
+                            <span class="text-[10px] text-stone-300 font-bold"><?php echo date('M d, Y', strtotime($c['created_at'])); ?></span>
+                        </div>
+                        <p class="text-stone-600 text-sm italic"><?php echo nl2br(htmlspecialchars($c['comment'])); ?></p>
+                        
+                        <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $c['user_id']): ?>
+                            <a href="delete_comment.php?comment_id=<?php echo $c['comment_id']; ?>" 
+                               onclick="return confirm('Delete comment?')"
+                               class="absolute top-4 right-4 text-stone-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all text-[10px] font-black">✕</a>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
     </article>
 </div>

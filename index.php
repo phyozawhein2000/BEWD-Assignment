@@ -109,7 +109,7 @@ try {
 
     <?php if (!isset($_SESSION['user_id'])): ?>
         <button onclick="openModal()" class="group px-12 py-5 rounded-full bg-emerald-800 text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-emerald-700 shadow-xl shadow-emerald-900/20 transition-all active:scale-95 border border-emerald-700">
-            Join Our Community
+            Join Us
         </button>
     <?php endif; ?>
 </div>

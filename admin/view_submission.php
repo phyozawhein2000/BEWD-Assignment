@@ -43,25 +43,20 @@ include '../includes/header.php';
             <p class="text-[10px] text-emerald-400/50 uppercase tracking-[0.3em] font-bold mt-1">Admin Control Panel</p>
         </div>
         
-        <nav class="flex-grow px-4 space-y-2">
+       <nav class="flex-grow px-4 space-y-2">
             <a href="index.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
-                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
                 Dashboard Overview
             </a>
             <a href="manage_recipes.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
-                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
                 Manage Recipes
             </a>
             <a href="manage_users.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
-                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
                 User Management
             </a>
             <a href="manage_subscribers.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
-                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
                 Subscribe Management
             </a>
             <a href="manage_community.php" class="flex items-center gap-3 px-6 py-4 text-emerald-100/70 hover:bg-emerald-800/50 hover:text-white rounded-2xl transition-all group">
-                <span class="w-1.5 h-1.5 bg-emerald-700 rounded-full group-hover:bg-emerald-400"></span>
                 Cookbook Management
             </a>
         </nav>
@@ -83,7 +78,6 @@ include '../includes/header.php';
         </a>
         
         <div class="flex gap-3">
-            <button onclick="window.print()" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-50 transition shadow-sm">Print</button>
             <a href="manage_community.php?delete_id=<?php echo $recipe['submission_id']; ?>" 
                onclick="return confirm('Permanently delete this submission?')"
                class="px-5 py-2.5 bg-red-50 text-red-600 border border-red-100 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-red-600 hover:text-white transition shadow-sm">Delete</a>
@@ -110,12 +104,21 @@ include '../includes/header.php';
                     <h1 class="text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
                         <?php echo htmlspecialchars($recipe['recipe_title']); ?>
                     </h1>
+
+                    <div class="flex flex-wrap gap-3 mt-6">
+                        <span class="px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-[10px] font-black uppercase tracking-wider border border-emerald-100">
+                            <?php echo htmlspecialchars($recipe['cuisine_type'] ?? 'General'); ?>
+                        </span>
+                        <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-xl text-[10px] font-black uppercase tracking-wider border border-amber-100">
+                            <?php echo htmlspecialchars($recipe['difficulty'] ?? 'Medium'); ?>
+                        </span>
+                </div>
                 </div>
                 
                 <div class="p-8 lg:p-12">
                     <h3 class="text-xs font-black uppercase text-slate-400 tracking-widest mb-6">Recipe Content</h3>
-                    <div class="bg-slate-50 p-8 rounded-3xl text-slate-700 leading-relaxed text-lg font-medium whitespace-pre-line border border-slate-100 italic shadow-inner">
-                        <?php echo htmlspecialchars($recipe['recipe_content']); ?>
+                    <div class="mt-8 prose prose-stone max-w-none italic text-stone-600 leading-relaxed break-words">
+                        <?php echo nl2br(htmlspecialchars($recipe['recipe_content'])); ?>
                     </div>
                 </div>
             </div>
@@ -145,7 +148,7 @@ include '../includes/header.php';
                 </div>
             </div>
 
-            <div class="bg-slate-900 p-8 rounded-[2rem] shadow-xl text-white relative overflow-hidden">
+            <!-- <div class="bg-slate-900 p-8 rounded-[2rem] shadow-xl text-white relative overflow-hidden">
                 <div class="relative z-10">
                     <h3 class="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-4">Moderation</h3>
                     <p class="text-sm text-slate-300 mb-6 leading-relaxed">Review the content for community guidelines before keeping it active.</p>
@@ -154,7 +157,7 @@ include '../includes/header.php';
                     </div>
                 </div>
                 <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-3xl"></div>
-            </div>
+            </div> -->
         </div>
     </div>
 </main>
