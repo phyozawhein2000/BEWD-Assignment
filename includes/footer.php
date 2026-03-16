@@ -29,7 +29,7 @@
             <h3 class="text-white font-semibold uppercase tracking-wider text-[10px]">Resources</h3>
             <a href="privacy.php" class="hover:text-orange-500 transition-colors">Privacy Policy</a>
             <a href="cookies.php" class="hover:text-orange-500 transition-colors">Cookie Preferences</a>
-            <a href="#" class="hover:text-orange-500 transition-colors">Terms of Service</a>
+            <a href="privacy.php" class="hover:text-orange-500 transition-colors">Terms of Service</a>
         </div>
 
         <div class="flex flex-col space-y-4 text-sm">

@@ -78,19 +78,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div>
                         <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Cuisine Type</label>
                         <select name="cuisine_type" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-stone-600 appearance-none cursor-pointer">
-                            <option value="Myanmar">🇲🇲 Myanmar</option>
-                            <option value="Italian">🇮🇹 Italian</option>
-                            <option value="Thai">🇹🇭 Thai</option>
-                            <option value="Chinese">🇨🇳 Chinese</option>
-                            <option value="Japanese">🇯🇵 Japanese</option>
-                        </select>
+                        <option value="" disabled selected>Select Cuisine Type</option>
+                        
+                        <optgroup label="Asia">
+                            <option value="Myanmar">Myanmar</option>
+                            <option value="Thai">Thailand</option>
+                            <option value="Chinese">Chinese</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Korean">Korean</option>
+                            <option value="Indian">Indian</option>
+                            <option value="Vietnamese">Vietnamese</option>
+                            <option value="Malaysian">Malaysian</option>
+                        </optgroup>
+
+                        <optgroup label="Europe">
+                            <option value="Italian"> Italian</option>
+                            <option value="French"> French</option>
+                            <option value="Spanish"> Spanish</option>
+                            <option value="Greek"> Greek</option>
+                            <option value="Turkish"> Turkish</option>
+                            <option value="British"> British</option>
+                        </optgroup>
+
+                        <optgroup label="Americas & Others">
+                            <option value="American">American (Western)</option>
+                            <option value="Mexican">Mexican</option>
+                            <option value="Brazilian">Brazilian</option>
+                            <option value="Middle Eastern"> Middle Eastern</option>
+                            <option value="Dessert">Dessert & Baking</option>
+                        </optgroup>
+                    </select>
                     </div>
                     <div>
                         <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Difficulty Level</label>
                         <select name="difficulty" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-bold text-stone-600 appearance-none cursor-pointer">
-                            <option value="Easy">🟢 Easy</option>
-                            <option value="Medium">🟡 Medium</option>
-                            <option value="Hard">🔴 Hard</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
                         </select>
                     </div>
                 </div>

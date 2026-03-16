@@ -29,6 +29,13 @@ $comments = $commentStmt->fetchAll();
 <div class="bg-stone-50 min-h-screen pt-32 pb-20">
     <article class="max-w-4xl mx-auto px-6">
         <div class="bg-white rounded-[3rem] p-10 shadow-sm border border-stone-100 mb-10">
+         <?php if (!empty($post['image_url']) && $post['image_url'] !== 'default_recipe.jpg'): ?>
+                <div class="w-full h-[400px] overflow-hidden rounded-[2rem] mb-8">
+                    <img src="uploads/cookbook/<?php echo htmlspecialchars($post['image_url']); ?>" 
+                         class="w-full h-full object-cover shadow-inner" 
+                         alt="<?php echo htmlspecialchars($post['recipe_title']); ?>">
+                </div>
+            <?php endif; ?>   
     <h1 class="text-4xl font-black text-slate-800 mb-6"><?php echo htmlspecialchars($post['recipe_title']); ?></h1>
     
     <div class="flex flex-wrap items-center justify-between py-6 border-y border-stone-50 gap-4">

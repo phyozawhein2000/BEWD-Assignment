@@ -9,7 +9,7 @@ include 'includes/navbar.php';
         <span class="text-[10px] font-bold tracking-[0.5em] uppercase text-emerald-600 mb-4 block">Transparency</span>
         <h1 class="text-5xl md:text-6xl font-serif text-stone-900 italic">Cookie Policy</h1>
         <p class="text-stone-400 mt-6 max-w-lg mx-auto font-light leading-relaxed italic">
-            How we use small bits of data to improve your culinary experience.
+            How we use small bits of data to improve your culinary and learning experience.
         </p>
     </header>
 
@@ -17,7 +17,7 @@ include 'includes/navbar.php';
         <section class="mb-20">
             <h2 class="text-2xl font-serif text-stone-800 mb-6">What are Cookies?</h2>
             <p class="text-stone-500 font-light leading-relaxed">
-                Cookies ဆိုသည်မှာ သင် Website အသုံးပြုနေစဉ် သင်၏ Browser (Computer သို့မဟုတ် Mobile) ထဲတွင် သိမ်းဆည်းထားသော စာသားဖိုင်အသေးစားလေးများ ဖြစ်ပါသည်။ ၎င်းတို့သည် Website ကို ပိုမိုကောင်းမွန်စွာ အလုပ်လုပ်စေရန်နှင့် သင့်အတွက် ပိုမိုအဆင်ပြေစေရန် ကူညီပေးပါသည်။
+                Cookies are small text files stored on your device (computer or mobile) by your web browser when you visit a website. They act as a memory for the website, allowing it to remember your actions and preferences over a period of time, making your browsing experience smoother and more personalized.
             </p>
         </section>
 
@@ -34,7 +34,7 @@ include 'includes/navbar.php';
                     <div>
                         <h4 class="text-lg font-serif text-stone-900 mb-2">Essential Cookies</h4>
                         <p class="text-stone-500 text-sm font-light leading-relaxed">
-                            Website ထဲသို့ Login ဝင်ရောက်ခြင်းနှင့် လုံခြုံရေးဆိုင်ရာ ကိစ္စရပ်များအတွက် မရှိမဖြစ်လိုအပ်သော Cookie များ ဖြစ်ပါသည်။ ၎င်းတို့မရှိပါက Website ၏ အချို့သော ဝန်ဆောင်မှုများ အလုပ်လုပ်မည် မဟုတ်ပါ။
+                            These are strictly necessary for the operation of our website. They include cookies that enable you to log into secure areas of the site. Without these, our website cannot function correctly.
                         </p>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ include 'includes/navbar.php';
                     <div>
                         <h4 class="text-lg font-serif text-stone-900 mb-2">Performance & Analytics</h4>
                         <p class="text-stone-500 text-sm font-light leading-relaxed">
-                            User များ Website ကို မည်သို့ အသုံးပြုသည်ကို လေ့လာရန် (ဥပမာ- ဘယ်စာမျက်နှာကို အများဆုံးဖတ်သလဲ) ဆိုသည်ကို သိရှိစေရန် အသုံးပြုပါသည်။ ၎င်းသည် Website ကို ပိုမိုတိုးတက်အောင် ပြုလုပ်ရာတွင် အထောက်အကူပြုပါသည်။
+                            These allow us to recognize and count the number of visitors and see how visitors move around our website. This helps us improve the way our website works, for example, by ensuring that users find what they are looking for easily.
                         </p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ include 'includes/navbar.php';
                     <div>
                         <h4 class="text-lg font-serif text-stone-900 mb-2">Functional Cookies</h4>
                         <p class="text-stone-500 text-sm font-light leading-relaxed">
-                            သင်နှစ်သက်သော Setting များ (ဥပမာ- Language သို့မဟုတ် Dark Mode) ကို မှတ်သားထားရန် အသုံးပြုပါသည်။
+                            These are used to recognize you when you return to our website. This enables us to personalize our content for you and remember your preferences, such as your choice of language or region.
                         </p>
                     </div>
                 </div>
@@ -72,18 +72,18 @@ include 'includes/navbar.php';
         <section class="mb-20">
             <h2 class="text-2xl font-serif text-stone-800 mb-6">Managing Your Choice</h2>
             <p class="text-stone-500 font-light leading-relaxed mb-8">
-                သင်သည် သင်၏ Browser Setting ထဲတွင် Cookies များကို ပိတ်ထားရန် သို့မဟုတ် ဖျက်ပစ်ရန် ရွေးချယ်နိုင်ပါသည်။ သို့သော် Cookies များကို ပိတ်ထားပါက Website ၏ အချို့သော အစိတ်အပိုင်းများ ကောင်းမွန်စွာ အလုပ်မလုပ်နိုင်သည်ကို သတိပြုစေလိုပါသည်။
+                You can choose to block or delete cookies through your browser settings. However, please be aware that if you use your browser settings to block all cookies (including essential cookies), you may not be able to access all or parts of our site.
             </p>
             <div class="flex gap-4">
-                <a href="#" class="text-[10px] font-bold uppercase tracking-widest text-stone-400 hover:text-stone-900 transition-colors border-b border-stone-200 pb-1">Chrome Settings</a>
-                <a href="#" class="text-[10px] font-bold uppercase tracking-widest text-stone-400 hover:text-stone-900 transition-colors border-b border-stone-200 pb-1">Safari Settings</a>
+                <a href="https://support.google.com/chrome/answer/95647" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-stone-400 hover:text-stone-900 transition-colors border-b border-stone-200 pb-1">Chrome Settings</a>
+                <a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" class="text-[10px] font-bold uppercase tracking-widest text-stone-400 hover:text-stone-900 transition-colors border-b border-stone-200 pb-1">Safari Settings</a>
             </div>
         </section>
 
         <footer class="mt-24 pt-10 border-t border-stone-100 italic text-[11px] text-stone-400 text-center">
-            Last Updated: March 2024
+            Last Updated: March 2026
         </footer>
     </main>
 </div>
 
-<?php //include 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

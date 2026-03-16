@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <div class="bg-emerald-900 p-10 md:p-16 rounded-[3rem] text-white shadow-2xl flex flex-col justify-between">
             <div>
-                <h2 class="text-3xl font-black mb-8 italic">Get in touch with the FoodFusion Team.</h2>
+                <h2 class="text-xl font-black mb-8 italic">Get in touch with the FoodFusion Team.</h2>
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 bg-emerald-800 rounded-2xl flex items-center justify-center shrink-0">
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div>
                             <p class="text-emerald-400 font-black uppercase text-[10px] tracking-widest mb-1">Email Us</p>
-                            <p class="font-bold text-lg">support@foodfusion.com</p>
+                            <p class="font-bold">support@foodfusion.com</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div>
                             <p class="text-emerald-400 font-black uppercase text-[10px] tracking-widest mb-1">Our Studio</p>
-                            <p class="font-bold text-lg leading-relaxed">No. 123, Culinary Avenue,<br>Yangon, Myanmar.</p>
+                            <p class="font-bold  leading-relaxed">No. 123, Culinary Avenue,<br>Yangon, Myanmar.</p>
                         </div>
                     </div>
                 </div>
@@ -79,20 +79,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Full Name</label>
-                        <input type="text" name="name" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-medium transition-all">
+                        <input type="text" name="name" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none ring-1 ring-emerald-200 font-medium transition-all">
                     </div>
                     <div>
                         <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Email Address</label>
-                        <input type="email" name="email" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-medium transition-all">
+                        <input type="email" name="email" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none ring-1 ring-emerald-200 font-medium transition-all">
                     </div>
                 </div>
                 <div>
                     <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Subject</label>
-                    <input type="text" name="subject" class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-medium transition-all">
+                    <input type="text" name="subject" class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none ring-1 ring-emerald-200 font-medium transition-all">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black uppercase text-stone-400 mb-2 tracking-widest">Your Message</label>
-                    <textarea name="message" rows="5" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none focus:ring-2 focus:ring-emerald-500 font-medium transition-all"></textarea>
+                    <textarea name="message" rows="5" required class="w-full px-6 py-4 rounded-2xl bg-stone-50 border-none ring-1 ring-emerald-200 font-medium transition-all"></textarea>
                 </div>
                 <button type="submit" class="w-full bg-emerald-800 text-white py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-emerald-700 shadow-xl shadow-emerald-900/10 transition-all active:scale-[0.98]">
                     Send Message
