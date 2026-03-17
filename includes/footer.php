@@ -7,22 +7,38 @@
                 Fostering a vibrant community for food lovers to share, learn, and create.
             </p>
             <div class="flex space-x-3">
-                <a href="https://t.me/Pz_1000" target="_blank" class="p-2.5 rounded-full bg-stone-900 hover:bg-orange-500 hover:text-white transition-all duration-300" aria-label="Telegram">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                </a>
+            <a href="https://t.me/Pz_1000" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="p-2.5 rounded-full bg-stone-900 text-white hover:bg-orange-500 transition-all duration-300 transform hover:-translate-y-1" 
+            aria-label="Telegram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
 
-                <a href="https://www.facebook.com/phyo.zaw.hein.764520/" target="_blank" class="p-2.5 rounded-full bg-stone-900 hover:bg-orange-500 hover:text-white transition-all duration-300" aria-label="Facebook">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a>
+            <a href="https://www.facebook.com/phyo.zaw.hein.764520/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="p-2.5 rounded-full bg-stone-900 text-white hover:bg-orange-500 transition-all duration-300 transform hover:-translate-y-1" 
+            aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
 
-                <a href="https://www.youtube.com/@PhyoZawHein-p5k" target="_blank" class="p-2.5 rounded-full bg-stone-900 hover:bg-orange-500 hover:text-white transition-all duration-300" aria-label="YouTube">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 2-2 68.4 68.4 0 0 1 15 0 2 2 0 0 1 2 2 24.12 24.12 0 0 1 0 10 2 2 0 0 1-2 2 68.4 68.4 0 0 1-15 0 2 2 0 0 1-2-2z"></path><path d="m10 15 5-3-5-3z"></path></svg>
-                </a>
+            <a href="https://www.youtube.com/@PhyoZawHein-p5k" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="p-2.5 rounded-full bg-stone-900 text-white hover:bg-orange-500 transition-all duration-300 transform hover:-translate-y-1" 
+            aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 2-2 68.4 68.4 0 0 1 15 0 2 2 0 0 1 2 2 24.12 24.12 0 0 1 0 10 2 2 0 0 1-2 2 68.4 68.4 0 0 1-15 0 2 2 0 0 1-2-2z"></path><path d="m10 15 5-3-5-3z"></path></svg>
+            </a>
 
-                <a href="https://www.tiktok.com/@yourusername" target="_blank" class="p-2.5 rounded-full bg-stone-900 hover:bg-orange-500 hover:text-white transition-all duration-300" aria-label="TikTok">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
-                </a>
-            </div>
+            <a href="https://www.tiktok.com/@yourusername" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="p-2.5 rounded-full bg-stone-900 text-white hover:bg-orange-500 transition-all duration-300 transform hover:-translate-y-1" 
+            aria-label="TikTok">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+            </a>
+        </div>
         </div>
 
         <div class="flex flex-col space-y-4 text-sm">

@@ -85,7 +85,7 @@ try {
                         <option value="Vegetarian" <?php echo $dietary == 'Vegetarian' ? 'selected' : ''; ?>>Vegetarian</option>
                         <option value="Vegan" <?php echo $dietary == 'Vegan' ? 'selected' : ''; ?>>Vegan</option>
                         <option value="Gluten-Free" <?php echo $dietary == 'Gluten-Free' ? 'selected' : ''; ?>>Gluten-Free</option>
-                        <option value="Non-Veg" <?php echo $dietary == 'Non-Veg' ? 'selected' : ''; ?>>Non-Veg</option>
+                        <option value="Non-Vegetarian" <?php echo $dietary == 'Non-Vegetarian' ? 'selected' : ''; ?>>Non-Vegetarian</option>
                     </select>
                 </div>
 

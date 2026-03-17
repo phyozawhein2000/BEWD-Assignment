@@ -47,7 +47,7 @@ include 'includes/navbar.php';
     <div class="max-w-4xl mx-auto px-6">
         
         <div class="mb-12">
-            <a href="dashboard.php" class="text-[10px] font-black uppercase tracking-widest text-stone-400 hover:text-emerald-600 transition-colors flex items-center gap-2 mb-6">
+            <a href="profile.php" class="text-[10px] font-black uppercase tracking-widest text-stone-400 hover:text-emerald-600 transition-colors flex items-center gap-2 mb-6">
                 ← Back to Dashboard
             </a>
             <h1 class="text-4xl font-serif text-stone-900 italic">Account Settings</h1>
